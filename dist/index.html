@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <div id="app" class="invisible">
+      <ol>
+        <li
+          v-for="(coin, index) in coins"
+          @mouseover="toggle(index)"
+          @mouseout="leave(index)"
+          class="list-item collapse"
+          :class="{
+            'in': expanded.indexOf(index) !== -1,
+          }">
+          {{ coin.cmc_rank }}: {{ coin.symbol }}
+          <span class="price usd">{{ coin.quote.USD.price | round }}</span>
+          <p class="content">
+            24H Volume: {{ coin.quote.USD.volume_24h | round }} <br />
+            1H % Chagne: {{ coin.quote.USD.percent_change_1h | round }} <br />
+            24H % Chagne: {{ coin.quote.USD.percent_change_24h | round }} <br />
+            7D % Chagne: {{ coin.quote.USD.percent_change_7d | round }} <br />
+          </p>
+        </li>
+      </ol>
+      <p> Credit Count: {{ status.credit_count }}</p>
+      <p> Last Update: {{ status.timestamp }}</p>
+    </div>
+    <script>
+      // You can also require other files to run in this process
+      const coin = require('../renderer.js');
+      const Vue = require('../node_modules/vue/dist/vue.min.js');
+
+      async function init() {
+        const resp = await coin.run();
+        Vue.filter("round", function(value) {
+          if (value) {
+            return Math.round(value * 100000) / 100000;
+          }
+        });
+        const vm = new Vue({
+          el: "#app",
+          data: {
+            coins: resp.data.data,
+            status: resp.data.status,
+            expanded: [],
+          },
+          methods: {
+            toggle: function(index) {
+              if(this.expanded.indexOf(index) === -1) {
+                this.expanded.push(index);
+              }
+            },
+            leave: function(index) {
+              const pos = this.expanded.indexOf(index);
+              this.expanded.splice(pos, 1);
+            }
+          }
+        });
+
+        if(vm.$el) {
+          vm.$el.classList.remove("invisible");
+        }
+      }
+      init();
+    </script>
+  </body>
+</html>
