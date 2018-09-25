@@ -20,14 +20,7 @@ class Coin {
                 headers: {
                     'X-CMC_PRO_API_KEY': this.apiKey,
                 },
-            })
-            // .then((resp) => {
-            //     console.log(resp.data.data);
-            // });
-        
-    }
-
-    
+            });
+    }   
 }
-console.log(`apiKey: ${config.coinMarketCapApiKey}`);
 module.exports = new Coin(require('axios'), config.coinMarketCapApiKey);

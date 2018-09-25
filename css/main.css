@@ -1,0 +1,51 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    background-color: white;
+}
+
+body * {
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+ol {
+    list-style-type: none;
+    padding: .5em .125em 0 .125em;
+    transition: all .3s ease-in-out;
+}
+
+.list-item {
+    border: #c8c8c8 1px solid;
+    line-height: 1.5em;
+    font-size: .875em;
+    height: 1.75em;
+    padding-left: .5em;
+    overflow: hidden;
+    margin-bottom: .375em;
+    transition: all .3s ease-in-out;
+    transition-delay: .5s;
+}
+
+.list-item.collapse.in {
+    height: 8.75em;
+}
+
+.list-item > .price {
+    float: right;
+    padding-right: .875em;
+}
+
+.list-item > .price.usd::before {
+    content: '$';
+}
+
+.collapse .content {
+    padding: .25em .5em;
+    line-height: 1.25em;
+    font-size: 1em;
+}
+
+.invisible {
+    opacity: 0;
+}

@@ -1,10 +1,11 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
+  "name": "coin-menu-app",
+  "version": "0.0.1",
   "description": "A minimal Electron application",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "start": "electron --inspect ./menu.js"
+    "start": "electron .",
+    "build": "node ./build.js"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -15,9 +16,10 @@
     "demo"
   ],
   "author": "GitHub",
-  "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^2.0.0",
+    "electron": "^3.0.0",
+    "electron-installer-dmg": "^2.0.0",
+    "electron-packager": "^12.1.2",
     "nodemon": "^1.18.4"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron');
-
+const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -8,10 +8,16 @@ let mainWindow
 
 async function createWindow () {
   // Create the browser window.
+  
   mainWindow = new BrowserWindow({width: 400, height: 400})
 
   // and load the index.html of the app.
-  mainWindow.loadFile('./dist/index.html')
+  try {
+    mainWindow.loadFile('./dist/index.html');
+  } catch (err) {
+    console.error(er);
+  }
+  
 
   try {
     mainWindow.webContents.debugger.attach("1.1");
@@ -21,14 +27,6 @@ async function createWindow () {
 
   mainWindow.webContents.debugger.on("detach", (event, reason) => {
     console.log("Debugger detached due to : ", reason);
-  });
-
-  mainWindow.webContents.debugger.on("message", (event, method, params) => {
-    if (method === "Network.requestWillBeSent") {
-      if (params.request.url === "https://www.github.com") {
-        mainWindow.webContents.debugger.detach();
-      }
-    }
   });
 
   mainWindow.webContents.debugger.sendCommand("Network.enable");
